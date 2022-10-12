@@ -1,0 +1,59 @@
+@import './assets/scss/variables.scss';
+@import './assets/scss/index.scss';
+@import './assets/scss/sign.scss';
+@import './assets/scss/header.scss';
+
+
+
+@font-face {
+  font-family: Inika;
+  src: url("./assets/fonts/Inika-Bold.ttf");
+  font-weight: 400;
+}
+
+
+@font-face {
+  font-family: Inika;
+  src: url("./assets/fonts/Inika-Bold.ttf");
+  font-weight: 800;
+}
+
+
+body{
+  color: $text-clr;
+  font-family: $font-main;
+  margin: 0;
+  padding: 0;
+}
+
+.relative{
+  position: relative;
+}
+
+.container{
+  width: 1140px;
+  margin: 0 auto;
+}
+ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+hr{
+  border: none;
+  height: 1px;
+  color: $border-color;
+  background-color: $border-color;
+}
+
+.clear{
+  position: relative;
+
+}
+
+a{
+  color: $text-clr;
+  text-decoration: none;
+  font-size: 16px;
+}

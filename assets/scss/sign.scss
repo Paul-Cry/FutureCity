@@ -1,0 +1,89 @@
+
+.sign{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  &__title{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 50px;
+  }
+  &-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  &-inputs{
+    width: max-content;
+    margin-bottom: 20px;
+    &.end{
+      margin-bottom: 40px;
+    }
+
+
+  }
+  &-input{
+    width: 300px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+    border: 1px solid $border-color;
+    padding-left: 10px;
+    font-size: 18px;
+
+
+
+    &:focus{
+      outline: none;
+    }
+    &__text{
+      display: block;
+      width: max-content;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 28px;
+    }
+
+  }
+  &__link{
+    align-self: start;
+    text-decoration: none;
+    color:$text-clr;
+    &.button{
+      background: #e50404;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      padding: 10px 15px;
+      &:hover{
+        color: $item-white-txt;
+      }
+    }
+    &:hover{
+      color: $text-clr_active;
+    }
+
+  }
+  .cab-scor__button{
+    padding: 14px 0;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+
+}
+
+.team.sign{
+  width: max-content;
+  height: max-content;
+  margin-top: 0;
+  padding: 25px 160px;
+  background:$item_block;
+}
+
