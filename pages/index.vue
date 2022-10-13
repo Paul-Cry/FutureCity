@@ -2,9 +2,7 @@
   <div>
 
   </div>
-  
 </template>
-
 <script>
 
   //import { mapActions, mapGetters, mapState } from 'vuex'
