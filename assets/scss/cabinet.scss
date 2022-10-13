@@ -1,0 +1,54 @@
+.cab{
+    &__title{
+        text-align: center;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 26px;
+        margin-bottom: 100px;
+    }
+    &__hr{
+        margin-bottom: 40px;
+    }
+    &-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 18px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    &__text, &__number{
+        margin: 0;
+        cursor: default;
+    }
+    &_status{
+        display: flex;
+        align-items: center;
+        button{
+            border: none;
+            background: none;
+            width: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            z-index: 1;
+            &:first-child{
+                margin-right: 19px;
+            }
+            img{
+                cursor: pointer;
+            }
+        }
+    }
+}
+}
+
+.button_status{
+    cursor: pointer !important !important;
+    z-index: 999;
+    transition: all .5s ease-in-out;
+    &:hover{
+        transform: rotate(360deg);
+    }
+}

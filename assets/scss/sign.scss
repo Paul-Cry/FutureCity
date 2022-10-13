@@ -52,17 +52,21 @@
   &__link{
     align-self: start;
     text-decoration: none;
+    background: none;
     color:$text-clr;
     &.button{
-      background: #e50404;
+      background-color: transparent;
       border: none;
-      color: white;
+      color: #000;
       font-size: 16px;
       cursor: pointer;
       border-radius: 4px;
       padding: 10px 15px;
+      transition: all .5s;
+      border: 1px solid #000;
       &:hover{
-        color: $item-white-txt;
+        background: #000000;
+        color: white;
       }
     }
     &:hover{
@@ -74,6 +78,8 @@
     padding: 14px 0;
     width: 100%;
     margin-bottom: 20px;
+    background: none;
+    border: none;
   }
 
 
@@ -83,7 +89,8 @@
   width: max-content;
   height: max-content;
   margin-top: 0;
-  padding: 25px 160px;
-  background:$item_block;
+  padding: 120px 160px;
+  background: #F3F3F3;
+  border-radius: 10px;
 }
 

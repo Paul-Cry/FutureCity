@@ -1,80 +1,53 @@
 
 .logo{
-    width: 180px;
-}
-.header{
-  &-content{
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 0;
-   
-  }
-  &-nav{
-    display: flex;
-    &-item{
-      display: flex;
-      align-items: center;
-      img{
-        margin-left: 20px;
-      }
+    width: 57px;
+    &__text{
+      margin-left: 20px;
     }
-  }
-  &-logo{
+}
+
+
+.header{
+  &-nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    p{
-      padding-left: 1rem;
-      font-family: 'Inika';
-      font-style: normal;
-      font-weight: 300;
-      font-size: 1rem;
+    padding: 10px 0;
+    &-items{
+      display: flex;
+    }
+    &__logo{
+      display: flex;
     }
   }
+  &__title{
+    
+    font-size: 32px;
+    line-height: 42px;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  &__text{
+    margin-bottom: 61px;  
+  }
+  &-main{
+    height: 596px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(180deg, #F3F3F3 0%, rgba(217, 217, 217, 0) 100%);
+  }
   &__button{
-    padding: 12px 24px;
-    border: 1px solid #141111;  
+    border: 1px solid #141111;
     background-color: transparent;
+    padding: 12px 24px;
     cursor: pointer;
     transition: all .5s;
     &:hover{
-      color: white;
       background-color: #141111;
-      
-    }
-  }
-}
-
-
-.content{
-  height: 596px;
-  background: linear-gradient(180deg, #F3F3F3 0%, rgba(217, 217, 217, 0) 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  
-  .main-text{
-    text-align: center;
-    &__item{
-      margin: 0;
-    }
-    &__title{
-      font-size: 32px;
-      line-height: 42px;
-      margin-bottom: 12px;
-    }
-    &__subtitle{
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 26px;
-    }
-    &__text{
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 18px;
-      margin-bottom: 61px;
+      color: white;
     }
   }
 }

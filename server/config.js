@@ -9,11 +9,11 @@
 
 
 module.exports = {
-   HOST: '127.0.0.1',
+	HOST: '192.168.64.2:1306',
 	DBUSER: 'root',
 	DBPASSWORD: '',
 	DBNAME: 'city',
-   jwt: 'jwt-key' //Your jwt key for token generate
+	jwt: 'jwt-key' //Your jwt key for token generate
 }
 // mysql://
 // b59bb3e89addcf  USER NAME 
