@@ -9,7 +9,7 @@
 
 
 module.exports = {
-	HOST: 'localhost',
+	HOST: '127.0.0.1',
 	DBUSER: 'root',
 	DBPASSWORD: '',
 	DBNAME: 'city',

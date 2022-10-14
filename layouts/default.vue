@@ -6,26 +6,29 @@
         <p class="logo__text">#sdelaemluchse</p>
       </nuxt-link>
       <ul class="header-nav-items">
-        <li class="header-nav__links" v-if="!user">
+        <li class="header-nav__links" >
+          <nuxt-link to="/cabinet" class="header-nav__text ">
+            Личный кабинет
+          </nuxt-link>
+        </li>
+        <li class="header-nav__links" v-if="!user.email">
           <nuxt-link to="/auth/signin">
             <img src="/img/signin.svg" alt="" class="door">
           </nuxt-link>
         </li>
-        <li class="header-nav__links" v-if="user">
+        <li class="header-nav__links" v-if="user.email">
           <img src="/img/logout.svg" alt="" class="door" @click="deleteUser">
         </li>
       </ul>
     </nav>
-    <div>
-      <Nuxt />
-    </div>
+    <Nuxt />
     <footer></footer>
   </div>
 </template>
 
 <script>
   import { mapActions, mapGetters, mapState, mapMutations} from 'vuex'
-
+  import test from '/components/test.vue'
   export default {
     name: "main_layout",
     middleware: 'authenticated',
@@ -53,8 +56,8 @@
       },
       checkUser(){
         let userLocal = localStorage.getItem('user')
-        if(userLocal !== null && this.user === undefined){
-          this.addUser(userLocal)
+        if(userLocal !== null && this.user.email === undefined){
+          this.addUser(JSON.parse(userLocal))
         }
       }
     }

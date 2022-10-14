@@ -1,23 +1,31 @@
 export const state = () => ({
-  user: undefined,
+  user: {
+    email: undefined,
+    admin: false
+  },
   host: 'http://localhost:1000',
-  signInErr: false  
+  signInErr: false
 })
 
 export const mutations = {
   changeUser(state, data) {
-    state.user = data
+    state.user.email = data.email
   },
   addUser(state, user) {
     state.user = user
   },
   deleteUser(state, user) {
-    state.user = undefined
+    state.user.email = undefined
     localStorage.removeItem('user')
+    this.$router.push("/")
   },
   changeSigninErr(state, value) {
     state.signInErr = value
-    
+  },
+  addAdmin(state, value) {
+    if (state.user) {
+      state.user.admin = value
+    }
   }
 }
 
@@ -41,13 +49,13 @@ export const actions = {
           this.$router.push("/cabinet")
         }
       })
-    
+
   },
-  signIn(ctx, data) {
+  async signIn(ctx, data) {
     window.$nuxt.$root.$loading.start();
     let url = `${ctx.state.host}/api/auth/signin`
     ctx.commit('changeUser', data)
-    fetch(url, {
+    await fetch(url, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -56,18 +64,63 @@ export const actions = {
       body: JSON.stringify(data)
     })
       .then(res => {
-        window.$nuxt.$root.$loading.finish();
         if (res.status === 200) {
-          localStorage.setItem('user', JSON.stringify(ctx.state.user))
-          this.$router.push("/cabinet")
-        } else if(res.status === 401){
+        } else if (res.status === 401) {
           ctx.commit('changeSigninErr', true)
           setTimeout(() => {
             ctx.commit('changeSigninErr', false)
           }, 1000)
         }
       })
-    
+    let urlHost = `${ctx.state.host}/api/checkAdmin`
+    await fetch(urlHost, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log('json')
+        let admin = json.values.admin
+        ctx.commit('addAdmin', admin)
+        localStorage.setItem('user', JSON.stringify(ctx.state.user))
+      })
+    window.$nuxt.$root.$loading.finish();
+    this.$router.push("/cabinet")
+
+  },
+  addRequestCheck(ctx, data) {
+    let obj = {
+      email: data.email,
+      id_reques: data.id_reques
+    }
+    let url = `${ctx.state.host}/checkRequest`
+    fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(obj)
+    })
+  },
+  addRequestCancel(ctx, data) {
+    let obj = {
+      email: data.email,
+      id_reques: data.id_reques
+    }
+    let url = `${ctx.state.host}/cancel`
+    fetch(url, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(obj)
+    })
   }
 }
 
@@ -77,6 +130,6 @@ export const getters = {
   },
   signInErr(state) {
     return state.signInErr
-  }
+  }, 
 }
 

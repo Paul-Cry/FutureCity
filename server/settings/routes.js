@@ -28,9 +28,9 @@ module.exports = (app) => {
         .get(usersController.getAllRequest)
     app
         .route('/cancel')
-        .get(usersController.cancelRequest)
+        .post(usersController.cancelRequest)
     app
         .route('/checkRequest')
-        .get(usersController.checkRequest)
+        .post(usersController.checkRequest)
 
 }

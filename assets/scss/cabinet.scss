@@ -17,6 +17,7 @@
     padding: 20px 18px;
     border: 1px solid #000;
     border-radius: 10px;
+    margin-bottom: 20px;
     &__text, &__number{
         margin: 0;
         cursor: default;
@@ -45,7 +46,7 @@
 }
 
 .button_status{
-    cursor: pointer !important !important;
+    cursor: pointer !important ;
     z-index: 999;
     transition: all .5s ease-in-out;
     &:hover{

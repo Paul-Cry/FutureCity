@@ -1,12 +1,29 @@
 <template>
-  <div>
-    <header>
+  <div class="main">
+    <transition name="popup" mode="out-in">
+      <div class="popup active" v-if="popup.flag" @click="popup.flag = false">
+        <div class="popup-content " @click="(event)=> event.stopPropagation()" v-if="user">
+          <h2 class="popup__title">Заявка</h2>
+          <form @submit.prevent="addLocalRequest()">
+            <textarea name="" id="" cols="30" rows="10" class="popup__text" required v-model="text"></textarea>
+            <img src="/img/exit.svg" alt="" class="popup__exit" @click="popup.flag = false">
+            <button class="header__button">Отправить</button>
+          </form>
+         
+        </div>
+        <div class="popup-content auth" @click="(event)=> event.stopPropagation()" v-if="!user">
+          <h2 class="popup__title ">Для оставления заявки нужно авторизоваться</h2>
+          <img src="/img/exit.svg" alt="" class="popup__exit" @click="popup.flag = false">
+        </div>
+      </div>
+    </transition>
+    <header class="header">
       <div class="header-main">
         <div class="header-content">
           <h2 class="header__title">Сделаем этот город лучше вместе с вами</h2>
           <p class="header__text">Сервис для подачи заявок</p>
         </div>
-        <button class="header__button">Оставить заявку</button>
+        <button class="header__button" @click="popup.flag = true">Оставить заявку</button>
       </div>
     </header>
     <section class="news">
@@ -54,14 +71,28 @@
   </div>
 </template>
 <script>
-  //import { mapActions, mapGetters, mapState } from 'vuex'
+  import { mapActions, mapGetters, mapState } from 'vuex'
   export default {
+    transition: {
+          name: 'popup',
+          mode: 'out-in'
+    },
     name: 'IndexPage',
     layout: 'main_layout',
+    computed:{
+      ...mapGetters({
+        user: 'auth/user'
+      }),
+    },
     data: () => ({
-      // ...mapState({
-      //   sportEvent: 'getItem/sportEvent'
-      // })
+      text: undefined,
+      ...mapState({
+        sportEvent: 'getItem/sportEvent'
+      }),
+      popup: {
+        flag: false,
+        auth: false
+      }
     }),
     async mounted() {
       // this.$nextTick(() => {
@@ -71,15 +102,20 @@
 
 
     },
-    computed: {
-      // ...mapGetters({
-      //   flag: 'getItem/CloaseLoadingGet',
-      // }),
-    },
+
     methods: {
-      // ...mapActions({
-      //   flag: 'getItem/CloaseLoadingGet',
-      // }),
+      ...mapActions({
+        addRequest: 'request/addRequest',
+      }),
+      addLocalRequest(){
+        this.addRequest({
+          text: this.text,
+          email: this.user.email
+        })
+        this.popup.flag = false
+        this.text = ''
+      }
+      
     }
 
   }

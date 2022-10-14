@@ -79,7 +79,7 @@ exports.signin = (req, res) => {
 
 exports.ckeckAdmin = (req, res) => {
     //const sql = `SELECT * FROM users WHERE email = ${req.body.email} && admin = 0`;
-    db.query("SELECT * FROM users WHERE email = '" + req.body.email + "' && admin = 1", (error, rows, result) => {
+    db.query("SELECT * FROM users WHERE email = '" + req.body.email + "' && role = 1", (error, rows, result) => {
         if (error) {
             console.log(error)
         } else {
@@ -91,7 +91,6 @@ exports.ckeckAdmin = (req, res) => {
                 result = { admin: false }
             }
             response.status(200, result, res)
-
         }
     })
 }
@@ -104,7 +103,8 @@ exports.addRequest = (req, res) => {
             if (error) {
                 console.log(error)
             } else {
-                db.query("INSERT INTO`requests`(`content`, `id_users`, `status`) VALUES('" + text + "', '" + rows[0].id + "', 'waiting')",
+                console.log(rows[0].id)
+                db.query("INSERT INTO`requests`(`content`, `id_user`, `status`) VALUES('" + text + "', '" + rows[0].id + "', 'waiting')",
                     (error, rows, result) => {
                         if (error) {
                             console.log(error)
@@ -126,7 +126,7 @@ exports.cancelRequest = (req, res) => {
             if (error) {
                 console.log(error)
             } else {
-                db.query("UPDATE`requests` SET status = 'cancel' WHERE id_users = '" + rows[0].id + "'",
+                db.query("UPDATE`requests` SET status = 'cancel' WHERE id_user = '" + rows[0].id + "' && id = '" + req.body.id_reques + "'",
                     (error, rows, result) => {
                         if (error) {
                             console.log(error)
@@ -147,7 +147,7 @@ exports.checkRequest = (req, res) => {
             if (error) {
                 console.log(error)
             } else {
-                db.query("UPDATE`requests` SET status = 'check' WHERE id_users = '" + rows[0].id + "'",
+                db.query("UPDATE`requests` SET status = 'check' WHERE id_user = '" + rows[0].id + "' && id = '" + req.body.id_reques + "'",
                     (error, rows, result) => {
                         if (error) {
                             console.log(error)
@@ -165,7 +165,7 @@ exports.checkRequest = (req, res) => {
 
 
 exports.getAllRequest = (req, res) => {
-    db.query(`SELECT requests.content, requests.id, requests.status, users.email FROM requests INNER JOIN users ON users.id = requests.id_users`, (error, rows, result) => {
+    db.query(`SELECT requests.content, requests.id, requests.status, users.email FROM requests INNER JOIN users ON users.id = requests.id_user`, (error, rows, result) => {
         if (error) {
             console.log(error)
         } else {
