@@ -6,36 +6,57 @@
         <p class="logo__text">#sdelaemluchse</p>
       </nuxt-link>
       <ul class="header-nav-items">
-        <li class="header-nav__links" v-if="flag">
+        <li class="header-nav__links" v-if="!user">
+          <nuxt-link to="/auth/signin">
             <img src="/img/signin.svg" alt="" class="door">
+          </nuxt-link>
         </li>
-        <li class="header-nav__links" v-if="!flag">
-            <img src="/img/logout.svg" alt="" class="door">
+        <li class="header-nav__links" v-if="user">
+          <img src="/img/logout.svg" alt="" class="door" @click="deleteUser">
         </li>
       </ul>
     </nav>
-    <div >
-      <Nuxt/>
+    <div>
+      <Nuxt />
     </div>
     <footer></footer>
   </div>
 </template>
 
 <script>
+  import { mapActions, mapGetters, mapState, mapMutations} from 'vuex'
 
-
-
-
-export default {
-  name: "main_layout",
-  middleware: 'authenticated',
-
-  data: ()=>({
-    mousePosition: null,
-    flag: true
-  }),
-  methods: {}
-}
+  export default {
+    name: "main_layout",
+    middleware: 'authenticated',
+    mounted(){
+      this.checkUser()
+    },
+    computed: {
+      ...mapGetters({
+        user: 'auth/user'
+      })
+    },
+   data: () => ({
+        // ...mapState({
+        //   user: 'auth/user'
+        // })
+      }),
+    methods: {
+      ...mapMutations({
+        addUser: 'auth/addUser',
+        deleteUser: 'auth/deleteUser'
+      }),
+      test(){
+        console.log('user')
+        console.log(this.user)
+      },
+      checkUser(){
+        let userLocal = localStorage.getItem('user')
+        if(userLocal !== null && this.user === undefined){
+          this.addUser(userLocal)
+        }
+      }
+    }
+  }
 </script>
-
-

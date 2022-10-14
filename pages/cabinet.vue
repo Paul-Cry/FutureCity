@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    //import { mapActions, mapGetters, mapState } from 'vuex'
+    import { mapActions, mapGetters, mapState } from 'vuex'
 
     export default {
         name: 'cabinet',
@@ -58,22 +58,27 @@
             flag: true
         }),
         async mounted() {
+            this.checkUser()
             // this.$nextTick(() => {
             //   this.$nuxt.$loading.start()
             //   this.$nuxt.$loading.finish()
             // })
-
-
+            
         },
         computed: {
-            // ...mapGetters({
-            //   flag: 'getItem/CloaseLoadingGet',
-            // }),
+            ...mapGetters({
+                user: 'auth/user'
+            })
         },
         methods: {
             // ...mapActions({
             //   flag: 'getItem/CloaseLoadingGet',
             // }),
+            checkUser(){
+                if(this.user === undefined){
+                    this.$router.push("/")
+                }
+            }
         }
 
     }

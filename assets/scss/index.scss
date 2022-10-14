@@ -81,3 +81,17 @@ color: #1E2329;
     }
     }
 }
+.sign__error{
+    text-align: left !important;
+}
+
+.sign-err{
+    width: 100%;
+    transition: all 1s;
+    opacity: 0;
+    &.active{
+        color: red;
+        opacity: 1;
+
+    }        
+}

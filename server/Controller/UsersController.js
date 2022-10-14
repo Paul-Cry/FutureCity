@@ -55,7 +55,7 @@ exports.signin = (req, res) => {
             response.status(401, { message: `Пользователь с email - ${req.body.email} не найден. Пройдите регистрацию.` }, res)
         } else {
             const row = JSON.parse(JSON.stringify(rows))
-            const user_name = row;  
+            const user_name = row;
             row.map(rw => {
                 const password = bcrypt.compareSync(req.body.password, rw.password)
                 if (password) {
@@ -79,20 +79,113 @@ exports.signin = (req, res) => {
 
 exports.ckeckAdmin = (req, res) => {
     //const sql = `SELECT * FROM users WHERE email = ${req.body.email} && admin = 0`;
-    db.query("SELECT * FROM users WHERE email = '" + req.body.email + "' && admin = 1" , (error, rows, result) =>{
-        if(error){
+    db.query("SELECT * FROM users WHERE email = '" + req.body.email + "' && admin = 1", (error, rows, result) => {
+        if (error) {
             console.log(error)
-        }else{
+        } else {
             console.log(rows.length)
             let result
             if (rows.length === 1) {
-                result = {admin: true}
+                result = { admin: true }
             } else {
                 result = { admin: false }
             }
             response.status(200, result, res)
-            
+
         }
     })
 }
+
+exports.addRequest = (req, res) => {
+    let text = req.body.text
+    let email = req.body.email
+    function checkIDUsers() {
+        db.query("SELECT id FROM`users` WHERE email = '" + email + "'", (error, rows, result) => {
+            if (error) {
+                console.log(error)
+            } else {
+                db.query("INSERT INTO`requests`(`content`, `id_users`, `status`) VALUES('" + text + "', '" + rows[0].id + "', 'waiting')",
+                    (error, rows, result) => {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            response.status(200, result, res)
+                        }
+                    })
+            }
+        })
+    }
+    let idUser = checkIDUsers()
+}
+
+
+exports.cancelRequest = (req, res) => {
+    let email = req.body.email
+    function checkIDUsers() {
+        db.query("SELECT id FROM`users` WHERE email = '" + email + "'", (error, rows, result) => {
+            if (error) {
+                console.log(error)
+            } else {
+                db.query("UPDATE`requests` SET status = 'cancel' WHERE id_users = '" + rows[0].id + "'",
+                    (error, rows, result) => {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            response.status(200, result, res)
+                        }
+                    })
+            }
+        })
+    }
+    let idUser = checkIDUsers()
+}
+
+exports.checkRequest = (req, res) => {
+    let email = req.body.email
+    function checkIDUsers() {
+        db.query("SELECT id FROM`users` WHERE email = '" + email + "'", (error, rows, result) => {
+            if (error) {
+                console.log(error)
+            } else {
+                db.query("UPDATE`requests` SET status = 'check' WHERE id_users = '" + rows[0].id + "'",
+                    (error, rows, result) => {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            response.status(200, result, res)
+                        }
+                    })
+            }
+        })
+    }
+    let idUser = checkIDUsers()
+}
+
+
+
+
+exports.getAllRequest = (req, res) => {
+    db.query(`SELECT requests.content, requests.id, requests.status, users.email FROM requests INNER JOIN users ON users.id = requests.id_users`, (error, rows, result) => {
+        if (error) {
+            console.log(error)
+        } else {
+            response.status(200, rows, res)
+
+        }
+    })
+}
+
+
+
+
+// exports.getRequest = (req, res) => {
+//     `SELECT *
+//     FROM requests INNER JOIN users
+//     ON
+//     requests.id_users = users.id
+//     WHERE users.email = "in20light201@gmail.com"`
+// }
+
+
+
 

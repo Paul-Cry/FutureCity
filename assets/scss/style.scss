@@ -32,7 +32,8 @@ body{
 }
 
 .container{
-  width: 1140px;
+  max-width: 1140px !important;
+  width: 95%;
   margin: 0 auto;
 }
 ul{
