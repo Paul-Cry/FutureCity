@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 18px;
+    padding: 20px 30px;
     border: 1px solid #000;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -45,11 +45,19 @@
 }
 }
 
-.button_status{
-    cursor: pointer !important ;
-    z-index: 999;
-    transition: all .5s ease-in-out;
+
+.button_cabinet{
     &:hover{
-        transform: rotate(360deg);
+        cursor: pointer !important ;
     }
+}
+
+.button_cabinet:hover .button_status{
+            z-index: 999;
+            transition: all .5s ease-in-out;
+            transform: rotate(360deg);
+}
+
+.status__text{
+    margin-left: 10px;
 }

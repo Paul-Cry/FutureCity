@@ -6,8 +6,8 @@
         <p class="logo__text">#sdelaemluchse</p>
       </nuxt-link>
       <ul class="header-nav-items">
-        <li class="header-nav__links" >
-          <nuxt-link to="/cabinet" class="header-nav__text ">
+        <li class="header-nav__links">
+          <nuxt-link to="/cabinet" class="header-nav__text " v-if='user.email'>
             Личный кабинет
           </nuxt-link>
         </li>
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters, mapState, mapMutations} from 'vuex'
+  import { mapActions, mapGetters, mapState, mapMutations } from 'vuex'
   import test from '/components/test.vue'
   export default {
     name: "main_layout",
     middleware: 'authenticated',
-    mounted(){
+    mounted() {
       this.checkUser()
     },
     computed: {
@@ -40,23 +40,23 @@
         user: 'auth/user'
       })
     },
-   data: () => ({
-        // ...mapState({
-        //   user: 'auth/user'
-        // })
-      }),
+    data: () => ({
+      // ...mapState({
+      //   user: 'auth/user'
+      // })
+    }),
     methods: {
       ...mapMutations({
         addUser: 'auth/addUser',
         deleteUser: 'auth/deleteUser'
       }),
-      test(){
+      test() {
         console.log('user')
         console.log(this.user)
       },
-      checkUser(){
+      checkUser() {
         let userLocal = localStorage.getItem('user')
-        if(userLocal !== null && this.user.email === undefined){
+        if (userLocal !== null && this.user.email === undefined) {
           this.addUser(JSON.parse(userLocal))
         }
       }

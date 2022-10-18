@@ -9,23 +9,25 @@
                 <p class="cab-item__text">{{element.email}}</p>
                 <div class="cab-item_status">
                     <button>
-                        <img src="/img/cabinet/icons/check.svg" alt="" class="button button_status" @click="addCheckRequest({element: element, index: index})">
+                        <img src="/img/cabinet/icons/check.svg" alt="" class="button button_status"
+                            @click="addCheckRequest({element: element, index: index})">
                     </button>
                     <button>
-                        <img src="/img/cabinet/icons/cancel.svg" alt="" class="button button_status" @click="addCancelRequest({element: element, index: index})">
+                        <img src="/img/cabinet/icons/cancel.svg" alt="" class="button button_status"
+                            @click="addCancelRequest({element: element, index: index})">
                     </button>
                 </div>
             </div>
         </div>
-        <div class="cab-items container user" v-else>
+        <div class="cab-items container user">
             <div class="cab-item" v-for="(element, index) in privateRequest">
                 <p class="cab-item__number">{{++index}}.</p>
                 <p class="cab-item__text">{{element.content}}</p>
-                 <div class="cab-item_status check" v-if="element.status ==='check'">
-                    <button>
+                <div class="cab-item_status check" v-if="element.status ==='check'">
+                    <button class='button_cabinet'>
                         <img src="/img/cabinet/icons/check.svg" alt="" class="button button_status">
+                        <p class="cab-item_status status__text button">Принято</p>
                     </button>
-                    <p class="cab-item_status status__text">Принято</p>
                 </div>
                 <div class="cab-item_status check" v-if="element.status ==='cancel'">
                     <button>
@@ -58,10 +60,9 @@
         }),
         async mounted() {
             this.checkUser()
-            this.checkPage()
-            console.log('123')
-            console.log(this.user)
-            let reading =()=>{
+            //this.checkPage()
+
+            let reading = () => {
                 console.log('this.user.admin')
                 console.log(this.user.admin)
                 this.getAllRequest()
@@ -77,15 +78,15 @@
                 user: 'auth/user',
                 requests: 'request/requests'
             }),
-            clearRequest(){
-                let result = this.requests.filter(el=>{
-                    if(el.status === "waiting"){
+            clearRequest() {
+                let result = this.requests.filter(el => {
+                    if (el.status === "waiting") {
                         return true
                     }
                 })
                 return result
             },
-            privateRequest(){
+            privateRequest() {
                 let result = this.requests.filter(el => {
                     if (el.email === this.user.email) {
                         return true
@@ -96,19 +97,19 @@
         },
         methods: {
             ...mapActions({
-              getAllRequest: 'request/getAllRequest',
-              addRequestCheck: 'auth/addRequestCheck',
-              addRequestCancel: 'auth/addRequestCancel'
+                getAllRequest: 'request/getAllRequest',
+                addRequestCheck: 'auth/addRequestCheck',
+                addRequestCancel: 'auth/addRequestCancel'
             }),
             ...mapMutations({
                 addUser: 'auth/addUser',
                 deleteRequest: 'request/deleteRequest'
             }),
 
-            checkPage(){
+            checkPage() {
                 console.log('this.user.email')
                 console.log(this.user.email)
-                if(this.user.email === undefined){
+                if (this.user.email === undefined) {
                     this.$router.push("/")
                 }
             },
@@ -120,9 +121,9 @@
                     this.addUser(JSON.parse(userLocal))
                 }
             },
-            addCheckRequest(data){
+            addCheckRequest(data) {
                 this.addRequestCheck({
-                     email: data.element.email,
+                    email: data.element.email,
                     id_reques: data.element.id
                 })
                 this.deleteRequest(data.index)
@@ -134,7 +135,7 @@
                 })
                 this.deleteRequest(data.index)
             },
-            test(){
+            test() {
                 console.log('clearRequest')
                 console.log('clearRequest')
                 console.log('clearRequest')
